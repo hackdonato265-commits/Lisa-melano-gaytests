@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>¿Qué siento realmente?</title>
+
+<style>
+:root {
+    --bg: #08090d;
+    --bg2: #11131a;
+    --card: rgba(20, 22, 30, .92);
+    --text: #f7f7fb;
+    --muted: #9b9eaa;
+    --primary: #8b5cf6;
+    --primary2: #6366f1;
+    --border: rgba(255,255,255,.09);
+    --danger: #ef4444;
+    --success: #22c55e;
+}
+
+body.light {
+    --bg: #f4f5f9;
+    --bg2: #ffffff;
+    --card: rgba(255,255,255,.95);
+    --text: #15161b;
+    --muted: #626572;
+    --border: rgba(0,0,0,.09);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(139,92,246,.18), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(99,102,241,.14), transparent 35%),
+        var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    transition: .3s;
+}
+
+button {
+    font: inherit;
+}
+
+.app {
+    width: min(100%, 950px);
+    margin: auto;
+    padding: 20px;
+}
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -.4px;
+}
+
+.theme-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* SCREENS */
+
+.screen {
+    display: none;
+    animation: fade .35s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* START */
+
+.hero {
+    text-align: center;
+    padding: 55px 20px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(139,92,246,.14);
+    border: 1px solid rgba(139,92,246,.25);
+    color: #a78bfa;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 8vw, 72px);
+    line-height: .98;
+    letter-spacing: -3px;
+    margin-bottom: 22px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a78bfa, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 17px;
+}
+
+.warning {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--card);
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* BUTTONS */
+
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+    border: none;
+    border-radius: 15px;
+    padding: 15px 22px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary2));
+    color: white;
+    box-shadow: 0 10px 30px rgba(99,102,241,.25);
+}
+
+.secondary-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.danger-btn {
+    background: rgba(239,68,68,.12);
+    border: 1px solid rgba(239,68,68,.25);
+    color: #f87171;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.danger-btn:hover {
+    transform: translateY(-2px);
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.danger-btn:active {
+    transform: scale(.98);
+}
+
+/* TEST */
+
+.test-top {
+    margin-bottom: 30px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), #818cf8);
+    transition: width .35s ease;
+}
+
+.question-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    padding: clamp(22px, 5vw, 42px);
+}
+
+.question-number {
+    color: #a78bfa;
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.question-card h2 {
+    font-size: clamp(24px, 5vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -.8px;
+    margin-bottom: 30px;
+}
+
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    width: 100%;
+    text-align: left;
+    padding: 17px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.025);
+    color: var(--text);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.option:hover {
+    border-color: rgba(139,92,246,.5);
+    transform: translateX(3px);
+}
+
+.option.selected {
+    background: rgba(139,92,246,.18);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(139,92,246,.12);
+}
+
+.test-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.test-actions button {
+    min-width: 120px;
+}
+
+/* RESULT */
+
+.result-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.result-header h1 {
+    font-size: clamp(32px, 7vw, 54px);
+    margin-bottom: 10px;
+}
+
+.result-header p {
+    color: var(--muted);
+}
+
+.result-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.result-type {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.result-type h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.result-type p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.donut-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.donut {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(
+        var(--primary) 0deg,
+        var(--primary2) 180deg,
+        #272938 180deg
+    );
+    position: relative;
+}
+
+.donut::after {
+    content: "";
+    position: absolute;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background: var(--card);
+}
+
+.donut span {
+    position: relative;
+    z-index: 2;
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.info-box {
+    padding: 18px;
+    background: rgba(139,92,246,.08);
+    border: 1px solid rgba(139,92,246,.16);
+    border-radius: 17px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.result-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* REVIEW */
+
+.review {
+    margin-top: 20px;
+    display: none;
+}
+
+.review.active {
+    display: block;
+}
+
+.review-item {
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 16px;
+    margin-bottom: 10px;
+}
+
+.review-item strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.review-item span {
+    color: #a78bfa;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 35px 0 10px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .app {
+        padding: 14px;
+    }
+
+    .hero {
+        padding: 35px 5px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .question-card {
+        padding: 22px 17px;
+    }
+
+    .test-actions {
+        flex-direction: column-reverse;
+    }
+
+    .test-actions button {
+        width: 100%;
+    }
+
+    .result-actions {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+    <div class="logo">¿Qué siento realmente?</div>
+
+    <button
+        type="button"
+        class="theme-btn"
+        id="themeBtn"
+        aria-label="Cambiar tema"
+    >🌙</button>
+</header>
+
+<!-- INICIO -->
+
+<section class="screen active" id="startScreen">
+
+    <div class="hero">
+
+        <div class="badge">AUTOCONOCIMIENTO</div>
+
+        <h1>
+            ¿Qué siento<br>
+            <span class="gradient">realmente?</span>
+        </h1>
+
+        <p>
+            Un espacio privado para reflexionar sobre tus sentimientos,
+            atracciones y la forma en que te relacionas con otras personas.
+        </p>
+
+        <div class="warning">
+            <strong>Importante:</strong><br>
+            Este test no puede determinar científicamente tu orientación
+            sexual ni decirte quién eres. Tus respuestas solamente sirven
+            como herramienta de reflexión.
+        </div>
+
+        <button
+            type="button"
+            class="primary-btn"
+            id="startBtn"
+        >
+            COMENZAR TEST →
+        </button>
+
+    </div>
+
+</section>
+
+<!-- TEST -->
+
+<section class="screen" id="testScreen">
+
+    <div class="test-top">
+
+        <div class="progress-info">
+            <span id="questionCounter">Pregunta 1 de 20</span>
+            <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+    </div>
+
+    <div class="question-card">
+
+        <div class="question-number" id="questionNumber">
+            PREGUNTA 01
+        </div>
+
+        <h2 id="questionText"></h2>
+
+        <div class="options" id="options"></div>
+
+    </div>
+
+    <div class="test-actions">
+
+        <button
+            type="button"
+            class="secondary-btn"
+            id="backBtn"
+        >
+            ← Atrás
+        </button>
+
+        <button
+            type="button"
+            class="primary-btn"
+            id="nextBtn"
+        >
+            Siguiente →
+        </button>
+
+    </div>
+
+</section>
+
+<!-- RESULTADO -->
+
+<section class="screen" id="resultScreen">
+
+    <div class="result-header">
+
+        <div class="badge">RESULTADO ORIENTATIVO</div>
+
+        <h1 id="resultTitle">
+            Tu resultado
+        </h1>
+
+        <p>
+            Una interpretación orientativa de tus respuestas.
+        </p>
+
+    </div>
+
+    <div class="result-card">
+
+        <div class="result-type">
+
+            <h2 id="resultType">
+                Exploración
+            </h2>
+
+            <p id="resultDescription">
+                Tus respuestas muestran que todavía estás explorando
+                cómo entiendes tus sentimientos.
+            </p>
+
+        </div>
+
+        <div class="donut-wrap">
+
+            <div class="donut" id="donut">
+
+                <span id="donutText">—</span>
+
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <strong>Recuerda:</strong><br><br>
+
+            Este resultado no es un diagnóstico y no representa un
+            porcentaje de tu orientación sexual.
+
+            No tienes que elegir una etiqueta si no quieres.
+            Tampoco tienes que descubrirlo todo inmediatamente.
+
+        </div>
+
+        <div class="result-actions">
+
+            <button
+                type="button"
+                class="primary-btn"
+                id="reviewBtn"
+            >
+                Revisar respuestas
+            </button>
+
+            <button
+                type="button"
+                class="secondary-btn"
+                id="shareBtn"
+            >
+                Compartir resultado
+            </button>
+
+            <button
+                type="button"
+                class="secondary-btn"
+                id="restartBtn"
+            >
+                Repetir test
+            </button>
+
+            <button
+                type="button"
+                class="danger-btn"
+                id="deleteBtn"
+            >
+                Borrar respuestas
+            </button>
+
+        </div>
+
+        <div class="review" id="review"></div>
+
+    </div>
+
+</section>
+
+<footer>
+    Tus respuestas se guardan únicamente en este dispositivo.
+</footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* =========================
+   CONFIGURACIÓN
+========================= */
+
+const STORAGE_KEY = "que_siento_realmente_v4";
+const THEME_KEY = "que_siento_tema_v2";
+
+let currentQuestion = 0;
+let answers = [];
+
+/* =========================
+   PREGUNTAS
+========================= */
+
+const questions = [
+
+{
+    text: "¿Hacia qué género sientes atracción romántica con mayor frecuencia?",
+    options: [
+        "Principalmente hacia otro género",
+        "Principalmente hacia mi mismo género",
+        "Hacia más de un género",
+        "No estoy seguro/a",
+        "Prefiero no responder"
+    ]
+},
+
+{
+    text: "Cuando imaginas tener una relación, ¿con qué género te resulta más natural imaginar a tu pareja?",
+    options: [
+        "Otro género",
+        "Mi mismo género",
+        "Más de un género",
+        "No suelo imaginarlo",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Alguna vez has sentido un enamoramiento fuerte por alguien de tu mismo género?",
+    options: [
+        "Muchísimo",
+        "Bastante",
+        "Algo",
+        "Poco",
+        "Nada",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Alguna vez has sentido atracción física por alguien de tu mismo género?",
+    options: [
+        "Muchísimo",
+        "Bastante",
+        "Algo",
+        "Poco",
+        "Nada",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Cómo te sientes cuando imaginas besar a alguien de tu mismo género?",
+    options: [
+        "Me atrae mucho",
+        "Me atrae bastante",
+        "Me genera curiosidad",
+        "Me resulta indiferente",
+        "No me atrae",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Cómo te sientes cuando imaginas tener una relación sentimental con alguien de tu mismo género?",
+    options: [
+        "Me gustaría mucho",
+        "Me gustaría bastante",
+        "Me genera curiosidad",
+        "Me resulta indiferente",
+        "No me gustaría",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Has sentido mariposas o nervios al estar cerca de alguien de tu mismo género?",
+    options: [
+        "Muchas veces",
+        "Varias veces",
+        "Alguna vez",
+        "Casi nunca",
+        "Nunca",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Sientes que tus sentimientos de atracción han cambiado con el tiempo?",
+    options: [
+        "Sí, bastante",
+        "Sí, un poco",
+        "No mucho",
+        "No",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Te resulta difícil distinguir entre admiración, amistad y atracción?",
+    options: [
+        "Muchísimo",
+        "Bastante",
+        "Algo",
+        "Poco",
+        "Nada"
+    ]
+},
+
+{
+    text: "¿Te has imaginado alguna vez teniendo una relación con alguien independientemente de su género?",
+    options: [
+        "Sí, muchas veces",
+        "Sí, algunas veces",
+        "Alguna vez",
+        "No",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Qué tipo de personas suelen llamar más tu atención?",
+    options: [
+        "Principalmente personas de otro género",
+        "Principalmente personas de mi mismo género",
+        "Personas de diferentes géneros",
+        "No noto un patrón",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Has sentido curiosidad por explorar tu orientación?",
+    options: [
+        "Muchísima",
+        "Bastante",
+        "Algo",
+        "Poca",
+        "Nada"
+    ]
+},
+
+{
+    text: "¿Te incomoda utilizar una etiqueta para describir tu orientación?",
+    options: [
+        "Muchísimo",
+        "Bastante",
+        "Algo",
+        "Poco",
+        "Nada"
+    ]
+},
+
+{
+    text: "¿Sientes que podrías sentir atracción por más de un género?",
+    options: [
+        "Sí, claramente",
+        "Probablemente sí",
+        "No estoy seguro/a",
+        "Probablemente no",
+        "No"
+    ]
+},
+
+{
+    text: "¿Tu atracción romántica y tu atracción física coinciden?",
+    options: [
+        "Sí, completamente",
+        "Generalmente sí",
+        "A veces",
+        "No siempre",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Alguna vez has sentido presión externa para identificarte de determinada manera?",
+    options: [
+        "Muchísima",
+        "Bastante",
+        "Algo",
+        "Poca",
+        "Nada"
+    ]
+},
+
+{
+    text: "Si nadie pudiera juzgarte, ¿qué tipo de relación te gustaría experimentar?",
+    options: [
+        "Una relación con otro género",
+        "Una relación con mi mismo género",
+        "Una relación independientemente del género",
+        "No estoy seguro/a",
+        "No quiero una relación"
+    ]
+},
+
+{
+    text: "¿Qué género aparece con mayor frecuencia cuando imaginas una relación ideal?",
+    options: [
+        "Otro género",
+        "Mi mismo género",
+        "Más de un género",
+        "Ninguno en particular",
+        "No estoy seguro/a"
+    ]
+},
+
+{
+    text: "¿Sientes que todavía estás descubriendo qué tipo de atracción experimentas?",
+    options: [
+        "Sí, completamente",
+        "Sí, bastante",
+        "Un poco",
+        "No mucho",
+        "No"
+    ]
+},
+
+{
+    text: "¿Cómo describirías actualmente tu orientación?",
+    options: [
+        "Heterosexual",
+        "Gay o lesbiana",
+        "Bisexual",
+        "Pansexual",
+        "Asexual",
+        "Otra identidad",
+        "Todavía no lo sé",
+        "Prefiero no utilizar una etiqueta"
+    ]
+}
+
+];
+
+/* =========================
+   ELEMENTOS
+========================= */
+
+const startScreen = document.getElementById("startScreen");
+const testScreen = document.getElementById("testScreen");
+const resultScreen = document.getElementById("resultScreen");
+
+const startBtn = document.getElementById("startBtn");
+const nextBtn = document.getElementById("nextBtn");
+const backBtn = document.getElementById("backBtn");
+
+const themeBtn = document.getElementById("themeBtn");
+
+const questionText = document.getElementById("questionText");
+const questionNumber = document.getElementById("questionNumber");
+const questionCounter = document.getElementById("questionCounter");
+
+const optionsContainer = document.getElementById("options");
+
+const progressBar = document.getElementById("progressBar");
+const progressPercent = document.getElementById("progressPercent");
+
+const resultType = document.getElementById("resultType");
+const resultDescription = document.getElementById("resultDescription");
+const resultTitle = document.getElementById("resultTitle");
+
+const reviewBtn = document.getElementById("reviewBtn");
+const shareBtn = document.getElementById("shareBtn");
+const restartBtn = document.getElementById("restartBtn");
+const deleteBtn = document.getElementById("deleteBtn");
+
+const review = document.getElementById("review");
+const donut = document.getElementById("donut");
+const donutText = document.getElementById("donutText");
+
+/* =========================
+   CAMBIAR PANTALLA
+========================= */
+
+function showScreen(screen) {
+
+    startScreen.classList.remove("active");
+    testScreen.classList.remove("active");
+    resultScreen.classList.remove("active");
+
+    screen.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+/* =========================
+   GUARDAR
+========================= */
+
+function saveData() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+            currentQuestion,
+            answers
+        })
+    );
+}
+
+/* =========================
+   CARGAR
+========================= */
+
+function loadData() {
+
+    try {
+
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (!saved) return;
+
+        const data = JSON.parse(saved);
+
+        if (Array.isArray(data.answers)) {
+            answers = data.answers;
+        }
+
+        if (
+            Number.isInteger(data.currentQuestion) &&
+            data.currentQuestion >= 0 &&
+            data.currentQuestion < questions.length
+        ) {
+            currentQuestion = data.currentQuestion;
+        }
+
+        if (answers.length > 0) {
+            startBtn.textContent = "CONTINUAR TEST →";
+        }
+
+    } catch (error) {
+
+        console.error("No se pudieron cargar las respuestas:", error);
+
+        answers = [];
+        currentQuestion = 0;
+    }
+}
+
+/* =========================
+   RENDERIZAR PREGUNTA
+========================= */
+
+function renderQuestion() {
+
+    const question = questions[currentQuestion];
+
+    if (!question) return;
+
+    questionText.textContent = question.text;
+
+    questionNumber.textContent =
+        "PREGUNTA " +
+        String(currentQuestion + 1).padStart(2, "0");
+
+    questionCounter.textContent =
+        `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+
+    const percent =
+        Math.round(
+            ((currentQuestion + 1) / questions.length) * 100
+        );
+
+    progressBar.style.width = percent + "%";
+    progressPercent.textContent = percent + "%";
+
+    optionsContainer.innerHTML = "";
+
+    question.options.forEach((option, index) => {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "option";
+        button.textContent = option;
+
+        if (answers[currentQuestion] === index) {
+            button.classList.add("selected");
+        }
+
+        button.addEventListener("click", function() {
+
+            answers[currentQuestion] = index;
+
+            document
+                .querySelectorAll(".option")
+                .forEach(btn => btn.classList.remove("selected"));
+
+            button.classList.add("selected");
+
+            saveData();
+        });
+
+        optionsContainer.appendChild(button);
+    });
+
+    backBtn.disabled = currentQuestion === 0;
+
+    backBtn.style.opacity =
+        currentQuestion === 0 ? ".5" : "1";
+
+    if (currentQuestion === questions.length - 1) {
+        nextBtn.textContent = "Ver resultado ✓";
+    } else {
+        nextBtn.textContent = "Siguiente →";
+    }
+}
+
+/* =========================
+   COMENZAR
+========================= */
+
+startBtn.addEventListener("click", function() {
+
+    if (answers.length > 0) {
+
+        const continuar = confirm(
+            "Ya tienes respuestas guardadas. ¿Quieres continuar desde donde lo dejaste?"
+        );
+
+        if (!continuar) {
+            answers = [];
+            currentQuestion = 0;
+            saveData();
+        }
+
+    } else {
+
+        currentQuestion = 0;
+    }
+
+    renderQuestion();
+    showScreen(testScreen);
+});
+
+/* =========================
+   SIGUIENTE
+========================= */
+
+nextBtn.addEventListener("click", function() {
+
+    if (answers[currentQuestion] === undefined) {
+
+        alert("Selecciona una respuesta antes de continuar.");
+
+        return;
+    }
+
+    if (currentQuestion < questions.length - 1) {
+
+        currentQuestion++;
+
+        saveData();
+        renderQuestion();
+
+    } else {
+
+        calculateResult();
+        showScreen(resultScreen);
+    }
+});
+
+/* =========================
+   ATRÁS
+========================= */
+
+backBtn.addEventListener("click", function() {
+
+    if (currentQuestion <= 0) return;
+
+    currentQuestion--;
+
+    saveData();
+    renderQuestion();
+});
+
+/* =========================
+   RESULTADO
+========================= */
+
+function calculateResult() {
+
+    let same = 0;
+    let multiple = 0;
+    let other = 0;
+    let exploring = 0;
+
+    answers.forEach((answerIndex, questionIndex) => {
+
+        const answer =
+            questions[questionIndex]?.options?.[answerIndex] || "";
+
+        const text = answer.toLowerCase();
+
+        if (
+            text.includes("mi mismo género") ||
+            text.includes("gay") ||
+            text.includes("lesbiana") ||
+            text.includes("me atrae mucho") ||
+            text.includes("me gustaría mucho")
+        ) {
+            same++;
+        }
+
+        if (
+            text.includes("más de un género") ||
+            text.includes("diferentes géneros") ||
+            text.includes("independientemente") ||
+            text.includes("bisexual") ||
+            text.includes("pansexual")
+        ) {
+            multiple++;
+        }
+
+        if (
+            text.includes("otro género") ||
+            text.includes("heterosexual")
+        ) {
+            other++;
+        }
+
+        if (
+            text.includes("no estoy seguro") ||
+            text.includes("todavía no") ||
+            text.includes("no noto") ||
+            text.includes("prefiero no")
+        ) {
+            exploring++;
+        }
+    });
+
+    let type;
+    let description;
+
+    if (
+        exploring >= same &&
+        exploring >= multiple &&
+        exploring >= other
+    ) {
+
+        type = "Exploración";
+
+        description =
+            "Tus respuestas muestran que todavía estás explorando o tratando de comprender tus sentimientos. No necesitas tener una respuesta definitiva ahora.";
+
+    } else if (
+        multiple > same &&
+        multiple > other
+    ) {
+
+        type = "Atracción hacia diferentes géneros";
+
+        description =
+            "Varias de tus respuestas reflejan apertura o atracción hacia personas de diferentes géneros. Esto puede ser algo que quieras seguir explorando.";
+
+    } else if (
+        same > other &&
+        same >= multiple
+    ) {
+
+        type = "Atracción hacia tu mismo género";
+
+        description =
+            "Varias respuestas reflejan sentimientos o atracción hacia personas de tu mismo género. Esto es solamente una observación de tus respuestas, no una etiqueta obligatoria.";
+
+    } else {
+
+        type = "Atracción hacia otro género";
+
+        description =
+            "Varias de tus respuestas reflejan atracción o interés principalmente hacia personas de otro género. Esto es solamente una observación de tus respuestas.";
+    }
+
+    resultType.textContent = type;
+    resultDescription.textContent = description;
+
+    resultTitle.textContent = "Esto es lo que reflejan tus respuestas";
+
+    const max = Math.max(
+        same,
+        multiple,
+        other,
+        exploring,
+        1
+    );
+
+    const percentage = Math.round(
+        (Math.max(same, multiple, other, exploring) / max) * 100
+    );
+
+    donutText.textContent = percentage + "%";
+
+    const degrees = percentage * 3.6;
+
+    donut.style.background =
+        `conic-gradient(
+            #8b5cf6 0deg,
+            #6366f1 ${degrees}deg,
+            #272938 ${degrees}deg
+        )`;
+
+    renderReview();
+}
+
+/* =========================
+   REVISAR
+========================= */
+
+function renderReview() {
+
+    review.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const item = document.createElement("div");
+
+        item.className = "review-item";
+
+        const questionElement =
+            document.createElement("strong");
+
+        questionElement.textContent =
+            `${index + 1}. ${question.text}`;
+
+        const answerElement =
+            document.createElement("span");
+
+        const answerIndex = answers[index];
+
+        answerElement.textContent =
+            answerIndex !== undefined
+                ? question.options[answerIndex]
+                : "Sin responder";
+
+        item.appendChild(questionElement);
+        item.appendChild(answerElement);
+
+        review.appendChild(item);
+    });
+}
+
+reviewBtn.addEventListener("click", function() {
+
+    review.classList.toggle("active");
+
+    reviewBtn.textContent =
+        review.classList.contains("active")
+            ? "Ocultar respuestas"
+            : "Revisar respuestas";
+});
+
+/* =========================
+   REPETIR
+========================= */
+
+restartBtn.addEventListener("click", function() {
+
+    const confirmed = confirm(
+        "¿Quieres borrar tus respuestas actuales y comenzar de nuevo?"
+    );
+
+    if (!confirmed) return;
+
+    answers = [];
+    currentQuestion = 0;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    startBtn.textContent = "COMENZAR TEST →";
+
+    review.classList.remove("active");
+
+    renderQuestion();
+    showScreen(testScreen);
+});
+
+/* =========================
+   BORRAR
+========================= */
+
+deleteBtn.addEventListener("click", function() {
+
+    const confirmed = confirm(
+        "¿Seguro que quieres borrar todas tus respuestas?"
+    );
+
+    if (!confirmed) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    answers = [];
+    currentQuestion = 0;
+
+    startBtn.textContent = "COMENZAR TEST →";
+
+    alert("Tus respuestas fueron borradas de este dispositivo.");
+
+    showScreen(startScreen);
+});
+
+/* =========================
+   COMPARTIR
+========================= */
+
+shareBtn.addEventListener("click", async function() {
+
+    const text =
+        "Hice el test «¿Qué siento realmente?» y estoy reflexionando sobre mis sentimientos y atracciones.";
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share({
+                title: "¿Qué siento realmente?",
+                text: text,
+                url: window.location.href
+            });
+
+        } catch (error) {
+
+            if (error.name !== "AbortError") {
+                console.log(error);
+            }
+        }
+
+    } else {
+
+        try {
+
+            await navigator.clipboard.writeText(
+                text + " " + window.location.href
+            );
+
+            alert("Texto copiado al portapapeles.");
+
+        } catch {
+
+            alert(
+                "No se pudo compartir automáticamente."
+            );
+        }
+    }
+});
+
+/* =========================
+   TEMA
+========================= */
+
+function loadTheme() {
+
+    const theme = localStorage.getItem(THEME_KEY);
+
+    if (theme === "light") {
+
+        document.body.classList.add("light");
+        themeBtn.textContent = "☀️";
+
+    } else {
+
+        document.body.classList.remove("light");
+        themeBtn.textContent = "🌙";
+    }
+}
+
+themeBtn.addEventListener("click", function() {
+
+    document.body.classList.toggle("light");
+
+    const light =
+        document.body.classList.contains("light");
+
+    localStorage.setItem(
+        THEME_KEY,
+        light ? "light" : "dark"
+    );
+
+    themeBtn.textContent =
+        light ? "☀️" : "🌙";
+});
+
+/* =========================
+   TECLADO
+========================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (!testScreen.classList.contains("active")) {
+        return;
+    }
+
+    if (event.key === "ArrowRight") {
+        nextBtn.click();
+    }
+
+    if (event.key === "ArrowLeft") {
+        backBtn.click();
+    }
+});
+
+/* =========================
+   INICIAR APP
+========================= */
+
+loadTheme();
+loadData();
+renderQuestion();
+
+</script>
+
+</body>
+  </html>
